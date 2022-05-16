@@ -1,0 +1,51 @@
+id,name,brewery_type,street,city,state,postal_code,country
+2,Avondale Brewing Co,micro,201 41st St S,Birmingham,Alabama,35222,United States
+44,Trim Tab Brewing,micro,2721 5th Ave S,Birmingham,Alabama,35233,United States
+46,Yellowhammer Brewery,micro,2600 Clinton Ave W,Huntsville,Alabama,35805,United States
+55,Bearpaw River Brewing Co,micro,4605 E Palmer Wasilla Hwy,Wasilla,Alaska,99654,United States
+76,King Street Brewing Co,micro,9050 King Street,Anchorage,Alaska,99515,United States
+94,1912 Brewing,micro,2045 N Forbes Blvd Ste 105,Tucson,Arizona,85745,United States
+98,Bad Water Brewing,contract,4216 N Brown Ave,Scottsdale,Arizona,85251,United States
+104,BJs Restaurant & Brewery - Chandler,brewpub,3155 W Chandler Blvd,Chandler,Arizona,85226,United States
+107,BlackRock Brewers,micro,1664 S Research Loop Ste 200,Tucson,Arizona,85710,United States
+127,Dragoon Brewing Co,micro,1859 W Grant Rd Ste 111,Tucson,Arizona,85745,United States
+141,Grand Canyon Brewing Company,micro,233 W Route 66,Williams,Arizona,86046,United States
+163,Mudshark Brewing Co,micro,210 Swanson Ave,Lake Havasu City,Arizona,86403,United States
+182,Richter Aleworks,micro,8279 W Lake Pleasant Pkwy Ste 110,Peoria,Arizona,85382,United States
+187,SanTan Brewing Co,regional,8 S San Marcos Pl,Chandler,Arizona,85225,United States
+198,State 48 Brewery,brewpub,13823 W Bell Rd,Surprise,Arizona,85374,United States
+219,Wren House Brewing Company,micro,2125 N 24th St,Phoenix,Arizona,85008,United States
+225,Brick Oven Pizza Co / Brick & Forge Brewing,brewpub,2410 Linwood Dr,Paragould,Arkansas,72450,United States
+235,Diamond Bear Brewing Co,micro,600 N Broadway St,North Little Rock,Arkansas,72114,United States
+247,Lost Forty Brewing,micro,501 Byrd St,Little Rock,Arkansas,72202,United States
+253,Rapp's Barren Brewing Company,micro,1343 E 9th St,Mountain Home,Arkansas,72653,United States
+264,Whistleing Springs Brewing Company / Dark Hills Brewery,planning,,Lowell,Arkansas,72745,United States
+281,7 Sisters Brewing Co,brewpub,181 Tank Farm Rd Ste 110,San Luis Obispo,California,93401,United States
+286,Abnormal Beer Company,micro,16990 Via Tazon Ste 123,San Diego,California,92127,United States
+305,Altamont Beer Works,micro,2402 Research Dr,Livermore,California,94550,United States
+329,Auburn Alehouse,brewpub,289 Washington St,Auburn,California,95603,United States
+333,Back Street Brewery & Tasting Room,micro,1884 S Santa Cruz St,Anaheim,California,92805,United States
+361,Bear Republic Brewing Co Pub & Restaurant - Lakeside,brewpub,5000 Roberts Lake Rd,Rohnert Park,California,94928,United States
+376,Bird Street Brewing,micro,242 Heinlen St,Lemoore,California,93245,United States
+385,Black Hammer Brewing,micro,544 Bryant St,San Francisco,California,94107,United States
+410,Brewbakers Brewing Co,brewpub,219 E Main St,Visalia,California,93291,United States
+425,Brewery in Planning - Los Angeles,planning,,Los Angeles,California,90049,United States
+430,Brewery in Planning - San Diego,planning,,San Diego,California,92121,United States
+437,Brewery Twenty Five,micro,106 3rd St,Hollister,California,95023,United States
+456,Camino Brewing Co LLC,micro,718 S 1st St,San Jose,California,95113,United States
+479,Chula Vista Brewery,micro,294 Third Ave,Chula Vista,California,91910,United States
+4,Band of Brothers Brewing Company,micro,1605 23rd Ave,Tuscaloosa,Alabama,35401,United States
+54,Barnaby Brewing Company,micro,206 N Franklin St,Juneau,Alaska,99801,United States
+489,Cloverdale Ale Company's Ruth McGowan's Brewpub,brewpub,131 E 1st St,Cloverdale,California,95425,United States
+508,Craftsman Brewing Co,micro,1260 Lincoln Ave Ste 100,Pasadena,California,91103,United States
+525,Devil's Potion Brewing Company LLC,planning,,Escondido,California,92026,United States
+543,Dry River Brewing,micro,671 S Anderson St,Los Angeles,California,90023,United States
+562,Eight Bridges Brewing,micro,332 Earhart Way,Livermore,California,94551,United States
+573,Eppig Brewing,micro,3052 El Cajon Blvd Ste 103,San Diego,California,92104,United States
+574,Escape Craft Brewery,micro,721 Nevada St Ste 401,Redlands,California,92373,United States
+592,Fieldwork Brewing Co,regional,1160 6th St,Berkeley,California,94710,United States
+612,Fort Point Beer Company,regional,644 Mason St,San Francisco,California,94129,United States
+615,Fountainhead Brewing Co,micro,4621 24th St,Sacramento,California,95822,United States
+623,Geartooth AleWerks,micro,1635 S 7th St,San Jose,California,95112,United States
+633,Golden State Brewery,micro,1252 Memorex Dr,Santa Clara,California,95050,United States
+654,Hangar 24 Craft Brewery,regional,1710 Sessums Dr,Redlands,California,92374,United States
