@@ -1,0 +1,301 @@
+---
+title: "DSC520 Final Project: Data Analysis of Life expectancy"
+author: "Rohan Valder"
+date: "August 3rd 2020"
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+         Life expectancy is a critical metric for assessing population health. It has increased rapidly since the Age of Enlightenment. In the early 19th century, life expectancy increased in the early industrialized countries while it stayed low in the rest of the world. This led to very high inequality in how health was distributed across the world. Good health in rich countries and persistently bad health in those countries that remained poor. Over the last decades, this global inequality decreased. No country in the world has a lower life expectancy than the countries with the highest life expectancy in 1800. Many countries that not long ago were suffering from bad health are catching up rapidly.
+         
+         The population of many of the wealthiest countries in the world has life expectancies of over 80 years. In 2019 the life expectancy in Spain, Switzerland, Italy, and Australia was above 83 years. In Japan, it was the highest with close to 85 years.
+         
+         The global inequalities in health that we see today also show that we can do much better. The almost unbelievable progress the entire world has achieved over the last two centuries should be encouragement enough for us to realize what is possible.
+
+```{r read,echo=FALSE}
+
+setwd("C:/DSC520/Week9")
+project_df <- read.csv("NCHS_-_Death_rates_and_life_expectancy_at_birth.csv")
+                                                                                                            
+country_df <- read.csv("Country.csv")
+
+metadata_df <- read.csv("Metadata_Country.csv")
+
+```
+
+##  __Data Cleaning__
+
+Below are the columns renamed:
+
+Original Columns                |    New Columns
+--------------------------------|----------------------
+Average.Life.Expectancy..Years. |  Avg_Life_Expectancy
+Age.adjusted.Death.Rate         |  Age_Adjusted_Death_Rate
+ï..Country.Name                 |  Country_Name
+Country.Code                    |  Country_Code
+                                
+Calculated the Average for multiple columns and created a new column. Dropped a few columns that were not required.
+
+
+```{r clean,echo=FALSE}
+
+names(project_df)[names(project_df) == "Average.Life.Expectancy..Years."] <- "Avg_Life_Expectancy"
+names(project_df)[names(project_df) == "Age.adjusted.Death.Rate"] <- "Age_Adjusted_Death_Rate"
+
+
+country_df = subset(country_df, select = -c(Indicator.Name,Indicator.Code, X2019) )
+country_df$Avg = rowMeans(country_df[,c(3:61)])
+names(country_df)[names(country_df) == "ï..Country.Name"] <- "Country_Name"
+names(country_df)[names(country_df) == "Country.Code"] <- "Country_Code"
+country_df = subset(country_df, select = -c(X1960,X1961,X1962,X1963,X1964,X1965,X1966,X1967,X1968,X1969,X1970,X1971,X1972,X1973,X1974,X1975,X1976,X1977,X1978,X1979,X1980,X1981,X1982,X1983,X1984,X1985,X1986,X1987,X1988,X1989,X1990,X1991,X1992,X1993,X1994,X1995,X1996,X1997,X1998,X1999,X2000,X2001,X2002,X2003,X2004,X2005,X2006,X2007,X2008,X2009,X2010,X2011,X2012,X2013,X2014,X2015,X2016,X2017,X2018) )
+
+
+
+names(metadata_df)[names(metadata_df) == "ï..Country.Code"] <- "Country_Code"
+country_metadata_df = subset(metadata_df, select = -c(SpecialNotes,TableName) )
+
+```
+
+#  __Life expectancy around the world__
+
+
+
+
+```{r merge,echo=FALSE}
+
+##merge(country_df, metadata_df)
+project_countries_df <- merge(country_df, country_metadata_df, by.x="Country_Code", by.y="Country_Code")
+
+```
+
+
+
+## __Summary__ 
+
+```{r country_summary,echo=FALSE}
+summary(project_countries_df)
+```
+
+
+## __Data trend based on Income Groups__
+
+```{r country_trend,echo=FALSE}
+table(project_countries_df$IncomeGroup, project_countries_df$Avg)
+```
+
+
+## __Plot based on Income Groups__
+
+```{r country_income,echo=FALSE}
+library(ggplot2)
+
+
+plotincomegroup <- ggplot(project_countries_df, aes(x=IncomeGroup, fill=IncomeGroup)) + geom_bar() +
+    labs(y="The Average Age among all countries") +
+    guides(fill=FALSE)
+plotincomegroup + coord_polar()
+
+```
+
+## __Density plot for average age__
+
+
+```{r country_density,echo=FALSE}
+library(dplyr)  
+
+ggplot(data=project_countries_df, aes(x=Avg)) + 
+    geom_density(size=1.5, fill="pink", alpha=0.5) +
+    geom_histogram(aes(y=..density..), binwidth=4, color="black", fill="lightblue", alpha=0.5)
+
+```
+
+
+## __Average Age distribution across regions__
+
+
+```{r country_distribution,echo=FALSE}
+ggplot(data=project_countries_df, aes(x=Avg, fill=Region)) +
+    geom_density(alpha=0.3)
+
+```
+
+
+## __Country Codes Vs Average Age grouped by Income Groups and Regions__
+
+By the plots below you see Average Age depends more on the Income Group (1st plot) rather than the regions.
+
+```{r country_codes,echo=FALSE}
+ggplot(project_countries_df, aes(x=Country_Code, y=Avg, group=IncomeGroup)) +
+    geom_line()
+
+ggplot(project_countries_df, aes(x=Country_Code, y=Avg, group=Region)) +
+    geom_line()
+
+```
+
+## __Country Vs Average Age__
+
+
+
+```{r Country_Average,echo=FALSE}
+
+
+
+
+project_countries_df %>% ggplot(aes(x=Avg, y=Country_Code, fill=IncomeGroup)) + 
+                                 geom_bar(stat = "identity", width = 0.8) + 
+                                 labs(title="Average age across countries grouped by Income Group", y="Country", x="Average Age") + 
+                                 coord_flip() + 
+                                 facet_grid()
+
+```
+
+## __Linear model__
+
+```{r Country_Linear_Model,echo=FALSE}
+country_lm <-  lm(Avg ~ Region + IncomeGroup, data=project_countries_df)
+# View the summary of your model
+summary(country_lm)
+
+predicted_df <- data.frame(
+  Avg = predict(country_lm, project_countries_df),
+  Region=project_countries_df$Region, IncomeGroup=project_countries_df$IncomeGroup
+  )
+
+## Compute deviation (i.e. residuals)
+mean_avg <- resid(country_lm)
+
+## Corrected Sum of Squares Total
+sst <- sum((mean_avg - project_countries_df$Avg)^2)
+
+## Corrected Sum of Squares for Model
+ssm <- sum((mean_avg - predicted_df$Avg)^2)
+
+## Residuals
+residuals <- project_countries_df$Avg - predicted_df$Avg
+
+## Sum of Squares for Error
+sse <- sum(residuals^2)
+
+## R Squared
+r_squared <- ssm/sst
+
+## Number of observations
+n <- nrow(project_countries_df)
+
+## Number of regression paramaters
+p <- 3
+
+## Corrected Degrees of Freedom for Model
+dfm <- p-1
+
+## Degrees of Freedom for Error
+dfe <- n-p
+
+## Corrected Degrees of Freedom Total:   DFT = n - 1
+dft <- n-1
+
+## Mean of Squares for Model:   MSM = SSM / DFM
+msm <- ssm/dfm
+## Mean of Squares for Error:   MSE = SSE / DFE
+mse <- sse/dfe
+## Mean of Squares Total:   MST = SST / DFT
+mst <- sst/dft
+## F Statistic
+f_score <- msm/mse
+
+## Adjusted R Squared R2 = 1 - (1 - R2)(n - 1) / (n - p)
+adjusted_r_squared <- 1 - (1- r_squared) * (n - 1) / (n - p)
+
+```
+
+# __Life expectancy in US__
+
+
+
+
+```{r slice,echo=FALSE}
+
+
+project_All_Both_df <- project_df[(project_df$Race == 'All Races') & (project_df$Sex == 'Both Sexes'),]
+
+project_All_Male_df <- project_df[ (project_df$Sex == 'Male'),]
+
+project_All_Female_df <- project_df[(project_df$Sex == 'Female'),]
+
+project_White_Male_df <- project_df[(project_df$Race == 'White') & (project_df$Sex == 'Male'),]
+
+project_White_Female_df <- project_df[(project_df$Race == 'White') & (project_df$Sex == 'Female'),]
+
+project_Black_Male_df <- project_df[(project_df$Race == 'Black') & (project_df$Sex == 'Male'),]
+
+project_Black_Female_df <- project_df[(project_df$Race == 'Black') & (project_df$Sex == 'Female'),]
+
+project_White_df <- project_df[(project_df$Race == 'White'),]
+
+project_Black_df <- project_df[(project_df$Race == 'Black'),]
+
+```
+
+## __Male and Female Life expectancy based on races in US__
+
+By the plots, you see the female (2nd box plot) has a higher life expectancy compared to the male.
+
+```{r usa_boxplot,echo=FALSE}
+
+
+project_All_Male_df %>% 
+    mutate(Race = reorder(Race, Avg_Life_Expectancy, FUN=median)) %>%
+    ggplot(aes(x=Race, y=Avg_Life_Expectancy, fill=Race)) +
+    geom_boxplot(outlier.size=2)
+
+project_All_Female_df %>% 
+    mutate(Race = reorder(Race, Avg_Life_Expectancy, FUN=median)) %>%
+    ggplot(aes(x=Race, y=Avg_Life_Expectancy, fill=Race)) +
+    geom_boxplot(outlier.size=2)
+
+```
+
+## __Male and Female Life expectancy since 1900 in US__
+
+As per the pattern, it is consistent in recent years the male life is shorter compared to the female.
+
+```{r usa_point,echo=FALSE}
+
+plt <- ggplot(data=project_White_df,
+              aes(x=Avg_Life_Expectancy, y=Year))
+
+plt + geom_point(aes(color=Sex)) +
+    geom_smooth(method="loess") 
+```
+
+## __Linear model__
+
+```{r usa_lm,echo=FALSE}
+library(QuantPsyc)
+simple_lm <-  lm(Avg_Life_Expectancy ~ Year, data = project_Black_df)
+plot(simple_lm)
+
+multiple_lm  <-  lm(Avg_Life_Expectancy ~ Year + Sex, data = project_Black_df)
+plot(multiple_lm)
+
+summary(simple_lm)
+summary(multiple_lm)
+lm.beta(multiple_lm)
+
+```
+
+References:
+
+1. https://healthdata.gov/dataset/nchs-death-rates-and-life-expectancy-birth
+2. http://euclid.psych.yorku.ca/www/psy6135/tutorials/gapminder.html
+3. https://ourworldindata.org/life-expectancy
+4. https://rmarkdown.rstudio.com/authoring_basics.html
