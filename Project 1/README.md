@@ -1,7 +1,4 @@
 
 **Airline Fatality Dashboard contains files:**
 
-Airline safetty.doc
-Infographic.pdf
-Presentation.ppt
-Supporting_document.doc
+Airline_Safety_Documentation.docx, Dashboard.pdf, Presentation.pptx, Supporting_Document.docx
